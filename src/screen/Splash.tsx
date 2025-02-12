@@ -1,8 +1,10 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Image, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 // import ohdidiLogo from '../../assets/png/ohdidi_logo.png';
 import ohdidiLogo from 'assets/png/ohdidi_logo.png';
+import { Text } from 'react-native';
+import { AppTextStyle } from '~/config';
 
 
 function SplashScreen() {
@@ -15,7 +17,14 @@ function SplashScreen() {
             style={styles.linearGradient}
         >
             <SafeAreaView style={styles.centerItem}>
-                <Image source={ohdidiLogo}></Image>
+                <Image source={ohdidiLogo} style={{marginBottom: 31}}></Image> 
+                <Text style={[AppTextStyle.extraBold, styles.descriptionText]}>
+                    Tìm kiếm
+                    <Text style={styles.descriptionTextChild}> Cơ sở lưu trú du lịch</Text>
+                </Text>
+                <Text style={[AppTextStyle.extraBold, styles.descriptionText]}>
+                    Cho kì nghỉ của bạn
+                </Text>
             </SafeAreaView>
         </LinearGradient>
     );
@@ -30,14 +39,13 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    buttonText: {
+    descriptionText: {
         fontSize: 18,
-        fontFamily: 'Gill Sans',
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-        backgroundColor: 'transparent',
+        color: 'white',
     },
+    descriptionTextChild: {
+        color: '#83CC20',
+    }
 });
 
 export default SplashScreen;

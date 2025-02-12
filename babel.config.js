@@ -9,6 +9,7 @@ module.exports = {
                     "~": "./src",
                     "assets": "./assets",
                     "screen": "./src/screen",
+                    "config": "./src/config",
                 },
             },
         ],
