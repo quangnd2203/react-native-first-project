@@ -6,13 +6,10 @@
  */
 
 import React from 'react';
-import { SplashScreen } from '~/screen';
-
+import {SplashScreen, OnboardingScreen} from '~/screen';
 
 function App() {
-    return (
-        <SplashScreen></SplashScreen>
-    );
+    return <OnboardingScreen />;
 }
 
 export default App;

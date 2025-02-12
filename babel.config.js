@@ -4,14 +4,15 @@ module.exports = {
         [
             require.resolve('babel-plugin-module-resolver'),
             {
-                root: ["./"],
+                root: ['./'],
                 alias: {
-                    "~": "./src",
-                    "assets": "./assets",
-                    "screen": "./src/screen",
-                    "config": "./src/config",
-                },
-            },
-        ],
+                    '~': './src',
+                    assets: './assets',
+                    screen: './src/screen',
+                    config: './src/config',
+                    components: './src/components',
+                }
+            }
+        ]
     ]
 };

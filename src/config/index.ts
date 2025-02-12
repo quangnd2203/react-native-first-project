@@ -1,5 +1,4 @@
-import AppTextStyle from "./AppTextStyle";
+import AppColors from './AppColors';
+import AppTextStyle from './AppTextStyle';
 
-export {
-    AppTextStyle
-}
+export {AppTextStyle, AppColors};
