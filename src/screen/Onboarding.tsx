@@ -1,9 +1,10 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Image } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Image, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import onboardingImage1 from 'assets/png/onboarding_1.png';
 import onboardingImage2 from 'assets/png/onboarding_2.png';
 import onboardingImage3 from 'assets/png/onboarding_3.png';
 import { AppColors, AppTextStyle } from '~/config';
 import { CircleIndicators } from '~/components';
+import { useState } from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -26,11 +27,20 @@ const onboardingData = [
 ];
 
 function OnboardingScreen() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const offsetX = event.nativeEvent.contentOffset.x;
+        const threshold = width / 2;
+        const newIndex = Math.floor((offsetX + threshold) / width); 
+        setCurrentIndex(newIndex);
+    };
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <SkipButton />
-            <OnBoardingView />
-            <CircleIndicators length={4} index={0} />
+            <OnBoardingView onScroll={handleScroll}/>
+            <CircleIndicators length={onboardingData.length} index={currentIndex} />
         </SafeAreaView>
     );
 }
@@ -45,9 +55,16 @@ function SkipButton() {
     );
 }
 
-function OnBoardingView() {
+function OnBoardingView({ onScroll }: { onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void }) {
     return (
-        <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false}>
+        <ScrollView
+            style={{marginBottom: 24}}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={onScroll}
+            scrollEventThrottle={200} // 16ms để mượt hơn
+        >
             {onboardingData.map((item, index) => (
                 <View key={index} style={styles.page}>
                     <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>

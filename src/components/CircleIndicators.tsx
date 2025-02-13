@@ -1,19 +1,47 @@
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useRef } from 'react';
+import { View, Animated, StyleSheet } from 'react-native';
 
 type CircleIndicatorsProps = {
     length: number;
     index: number;
 };
 
-function CircleIndicators(props: CircleIndicatorsProps) {
+function CircleIndicators({ length, index }: CircleIndicatorsProps) {
+    const animatedValues = useRef<Animated.Value[]>(
+        Array.from({ length }, () => new Animated.Value(0))
+    ).current;
+
+    useEffect(() => {
+        animatedValues.forEach((anim, i) => {
+            Animated.timing(anim, {
+                toValue: i === index ? 1 : 0,
+                duration: 200,
+                useNativeDriver: false,
+            }).start();
+        });
+    }, [index, animatedValues]);
+
     return (
         <View style={styles.indicatorContainer}>
-            {Array.from({ length: props.length }).map((_, index) => (
-                <View
-                    key={index}
+            {animatedValues.map((anim, i) => (
+                <Animated.View
+                    key={i}
                     style={[
                         styles.dot,
-                        props.index === index && styles.activeDot,
+                        {
+                            width: anim.interpolate({
+                                inputRange: [1, 1],
+                                outputRange: [8, 8],
+                            }),
+                            height: anim.interpolate({
+                                inputRange: [1, 1],
+                                outputRange: [8, 8],
+                            }),
+                            backgroundColor: anim.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: ['#ccc', '#024834'],
+                            }),
+                        },
                     ]}
                 />
             ))}
@@ -29,15 +57,6 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     dot: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-        backgroundColor: '#ccc',
-    },
-    activeDot: {
-        backgroundColor: '#007BFF',
-        width: 16,
-        height: 16,
         borderRadius: 8,
     },
 });
